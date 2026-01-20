@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connys Pferdewelt</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --magenta: #E6007E;
+            --navy: #0A192F;
+            --gold: #EAB308;
+            --bg-cream: #FAF9F6;
+            --white: #ffffff;
+            --transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-cream);
+            color: #2D3748;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        #cursor {
+            width: 20px; height: 20px;
+            background: var(--magenta);
+            border-radius: 50%;
+            position: fixed; pointer-events: none; z-index: 9999;
+            mix-blend-mode: multiply; transition: transform 0.1s ease;
+        }
+        @media (max-width: 1024px) { #cursor { display: none; } }
+
+        header {
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: rgba(250, 249, 246, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(230, 0, 126, 0.1);
+        }
+
+        .logo-container { height: 70px; display: flex; align-items: center; }
+        .logo-img { height: 100%; width: auto; object-fit: contain; mix-blend-mode: multiply; }
+
+        .nav-contact {
+            background: var(--magenta);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(230, 0, 126, 0.2);
+        }
+        .nav-contact:hover { transform: translateY(-3px) scale(1.05); background: var(--navy); }
+
+        .hero {
+            height: 90vh;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            align-items: center;
+            padding: 0 5% 0 10%;
+            gap: 4rem;
+        }
+
+        .hero-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            line-height: 1.1;
+            color: var(--navy);
+            margin-bottom: 1.5rem;
+        }
+        .hero-content h1 span { color: var(--magenta); }
+
+        .hero-image-box {
+            position: relative;
+            height: 75vh;
+            border-radius: 40px;
+            background: url('https://i.imgur.com/3JGjT6Y.jpg') center/cover;
+            box-shadow: 30px 30px 0px rgba(230, 0, 126, 0.1);
+        }
+
+        .about-section {
+            padding: 8rem 10%;
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 6rem;
+            align-items: center;
+            background: var(--white);
+        }
+        .conny-img { width: 100%; border-radius: 20px; box-shadow: -25px 25px 0px #FEF3C7; }
+
+        .about-text h2 { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 1.5rem; color: var(--navy); }
+        .about-text h2 span { color: var(--magenta); }
+
+        .section-padding { padding: 6rem 5%; }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-template-rows: repeat(2, 400px);
+            gap: 1.5rem;
+        }
+
+        .bento-item {
+            background: var(--white);
+            border-radius: 30px;
+            overflow: hidden;
+            position: relative;
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .bento-item:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+
+        .item-text { padding: 3rem; display: flex; flex-direction: column; justify-content: center; }
+        .item-img { background-size: cover; background-position: center; }
+
+        .item-1 { grid-column: span 7; background: #FEF3C7; }
+        .item-2 { grid-column: span 5; background-image: url('https://i.imgur.com/Nog3gf7.jpg'); }
+        .item-3 { grid-column: span 4; background-image: url('https://i.imgur.com/o7Yblom.jpg'); }
+        .item-4 { grid-column: span 4; background: var(--navy); color: white; }
+        .item-5 { grid-column: span 4; background-image: url('https://i.imgur.com/hzjHHuW.jpg'); }
+
+        .bento-item h3 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 1rem; }
+        .magenta-text { color: var(--magenta); }
+
+        /* --- Footer Styles mit Logo-Fix --- */
+        footer { background: var(--navy); color: white; padding: 6rem 10% 3rem; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1.5fr 1fr; gap: 4rem; }
+        
+        /* Logo Card Fix */
+        .footer-logo-card {
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            display: inline-block;
+            margin-bottom: 2rem;
+            height: 80px;
+        }
+        .footer-logo-img { height: 100%; width: auto; mix-blend-mode: multiply; }
+
+        .contact-link { font-size: clamp(1.2rem, 2vw, 2rem); color: var(--gold); text-decoration: none; font-family: 'Playfair Display', serif; display: block; margin-bottom: 0.5rem; }
+
+        @media (max-width: 968px) {
+            .hero { grid-template-columns: 1fr; height: auto; padding: 120px 5% 60px; text-align: center; }
+            .hero-image-box { height: 450px; order: -1; }
+            .about-section { grid-template-columns: 1fr; gap: 4rem; padding: 5rem 5%; }
+            .bento-grid { display: flex; flex-direction: column; }
+            .bento-item { min-height: 350px; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <div id="cursor"></div>
+
+    <header>
+        <div class="logo-container">
+            <img src="https://i.imgur.com/BK2U01c.png" alt="Connys Pferdewelt Logo" class="logo-img">
+        </div>
+        <a href="mailto:conny.bluemert@aon.at" class="nav-contact">Anfrage senden</a>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <p style="text-transform: uppercase; letter-spacing: 4px; font-weight: 600; color: var(--magenta); margin-bottom: 1rem;">Rehatraining & Prävention</p>
+                <h1 class="reveal visible"><span>Harmonie</span> & Kraft für dein Pferd.</h1>
+                <p style="max-width: 550px; font-size: 1.1rem; margin-bottom: 2.5rem; opacity: 0.8;">
+                    Wissenschaftlich fundiertes Training nach Michael Geitner. Entdecke Dual-Aktivierung® und Equikinetic® für nachhaltige Gesundheit und Balance.
+                </p>
+                <div style="display: flex; gap: 20px; align-items: center;">
+                    <div style="width: 60px; height: 2px; background: var(--magenta);"></div>
+                    <span style="font-weight: 700; font-size: 0.8rem; text-transform: uppercase; color: var(--navy);">Zertifiziert</span>
+                </div>
+            </div>
+            <div class="hero-image-box"></div>
+        </section>
+
+        <section class="about-section">
+            <div class="reveal">
+                <img src="https://i.imgur.com/8jssa1D.jpg" alt="Conny umarmt Pferd" class="conny-img">
+            </div>
+            <div class="about-text reveal">
+                <span style="color: var(--magenta); font-weight: 700; text-transform: uppercase; font-size: 0.8rem;">Meine Geschichte</span>
+                <h2 style="margin-top: 0.5rem;">Hallo, ich bin <span>Conny.</span></h2>
+                <p>Mein Weg zum Geitner-Training begann mit einer persönlichen Suche: Aufgrund immer wiederkehrender Lahmheit meines eigenen Pferdes fand ich zur Dual-Aktivierung®.</p>
+                <br>
+                <p>Seit diesem Moment bin ich begeistert von der tiefen Wirkung dieser blau-gelben Welt. Das Training eignet sich für jedes Alter und jeden Gesundheitszustand – ohne Vorkenntnisse, aber mit schnellen, sichtbaren Erfolgen.</p>
+                <br>
+                <p><b>Mein Ziel:</b> Ein abwechslungsreiches, effektives Training, das Muskelaufbau, Koordination und mentale Gelassenheit fördert.</p>
+            </div>
+        </section>
+
+        <section class="section-padding" style="background: #f8f9fa;">
+            <div class="bento-grid">
+                <div class="bento-item item-1 item-text reveal">
+                    <h3>Das Prinzip <span class="magenta-text">Blau-Gelb</span></h3>
+                    <p>Pferde sehen die Welt anders. Wir nutzen ihre dichromatische Farbwahrnehmung, um durch gezielte Reize die Kommunikation beider Gehirnhälften zu optimieren. Das Ergebnis ist ein fokussiertes, ausbalanciertes Pferd.</p>
+                </div>
+                <div class="bento-item item-2 item-img reveal"></div>
+                <div class="bento-item item-3 item-img reveal"></div>
+                <div class="bento-item item-4 item-text reveal">
+                    <h3 style="color: var(--gold);">Deine Erfolge</h3>
+                    <ul style="list-style: none; font-weight: 400; font-size: 0.95rem;">
+                        <li style="margin-bottom: 0.8rem;">→ Sichtbarer Muskelaufbau</li>
+                        <li style="margin-bottom: 0.8rem;">→ Bessere Koordination</li>
+                        <li style="margin-bottom: 0.8rem;">→ Mentale Gelassenheit</li>
+                        <li>→ Mehr Aufmerksamkeit</li>
+                    </ul>
+                </div>
+                <div class="bento-item item-5 item-img reveal"></div>
+            </div>
+        </section>
+
+        <section class="section-padding" style="text-align: center;">
+            <div class="reveal">
+                <span style="color: var(--magenta); font-weight: 700; text-transform: uppercase;">Zusammenarbeit</span>
+                <h2 style="font-family: 'Playfair Display', serif; font-size: 3rem; margin: 1rem 0;">Mein Angebot für euch</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 3rem;">
+                    <div style="padding: 2.5rem; background: var(--bg-cream); border-radius: 20px;">
+                        <h4 style="color: var(--magenta); margin-bottom: 1rem;">Einzeltraining</h4>
+                        <p style="font-size: 0.9rem;">Individuelle Trainingspläne, abgestimmt auf den Gesundheitszustand deines Pferdes.</p>
+                    </div>
+                    <div style="padding: 2.5rem; background: var(--bg-cream); border-radius: 20px;">
+                        <h4 style="color: var(--magenta); margin-bottom: 1rem;">Tageskurse</h4>
+                        <p style="font-size: 0.9rem;">Theorie & Praxis für mehrere Teilnehmer direkt bei euch im Stall.</p>
+                    </div>
+                    <div style="padding: 2.5rem; background: var(--bg-cream); border-radius: 20px;">
+                        <h4 style="color: var(--magenta); margin-bottom: 1rem;">2-Tageskurse</h4>
+                        <p style="font-size: 0.9rem;">Intensiv-Themen: Dual-Aktivierung® & Equikinetic® mit tiefem Theorie-Block.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <!-- Fix: Logo in einer weißen Karte für den Footer -->
+                <div class="footer-logo-card">
+                    <img src="https://i.imgur.com/BK2U01c.png" alt="Logo" class="footer-logo-img">
+                </div>
+                <p style="opacity: 0.7; max-width: 350px;">Professionelles Geitner-Training für Pferde in jedem Alter. Fokus auf Biomechanik und mentale Stärke.</p>
+            </div>
+            <div>
+                <h4 style="margin-bottom: 1.5rem; color: var(--gold);">Kontakt</h4>
+                <a href="tel:06644236141" class="contact-link">0664 - 423 61 41</a>
+                <a href="mailto:conny.bluemert@aon.at" class="contact-link" style="font-size: 1.2rem;">conny.bluemert@aon.at</a>
+            </div>
+            <div>
+                <h4 style="margin-bottom: 1.5rem; color: var(--gold);">Region</h4>
+                <p style="opacity: 0.8;">2522 Oberwaltersdorf<br>Bezirk Baden, NÖ<br>Ich komme zu dir in den Stall!</p>
+            </div>
+        </div>
+        <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; margin-top: 4rem; font-size: 0.8rem; opacity: 0.5; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+            <span>© 2026 Connys Pferdewelt | Lizenziert bis 2027</span>
+            <div style="display: flex; gap: 20px;">
+                <a href="https://www.instagram.com/connys.pferdewelt/" target="_blank" style="color: white; text-decoration: none;">Instagram</a>
+                <span>Impressum</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        const observerOptions = { threshold: 0.15 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
